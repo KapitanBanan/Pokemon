@@ -1,13 +1,15 @@
 import React, {Component} from "react";
 import { Link } from "react-router-dom";
-
+import styles from './Design.module.css';
 
 class PokemonList extends Component {
 
     limit = 20;
     pageKey = "pokemons.page";
     favListKey = "pokemons.favoriteList";
-        
+    next = ">>"
+    previous ="<<"
+
     favOnly = false;
     
     constructor(props) {
@@ -82,26 +84,31 @@ class PokemonList extends Component {
         return (
             <div>
                 <h1>Pokemons</h1>
-                <button onClick={this.toggleFavOnly}>{favOnly ? "Show all pokemons" : "Show favorite pokemons"}</button>
-                {
-                    (favOnly ? favPokemons : pokemons).map(p => {
-                        return (
-                            <div key={p.name}>
-                                <Link to={`/pokemons/${p.id}`}>{p.name}</Link>
-                            </div>
-                        );
-                    })
-                }
-                <button disabled={offset<=0} 
+                <div className={styles.container_row}>   
+                    <button disabled={offset<=0} 
                         onClick={() => this.paginator(false)}
                         >
-                                Previous
-                </button>
-                <button disabled={offset+limit>count} 
-                        onClick={ () => this.paginator(true)}
-                        >
-                            Next
-                </button>
+                                {this.previous}
+                    </button>
+                    <div className={styles.container_column}>
+                        <button onClick={this.toggleFavOnly}>{favOnly ? "Show all pokemons" : "Show favorite pokemons"}</button>
+                        {
+                            (favOnly ? favPokemons : pokemons).map(p => {
+                                return (
+                                    <div key={p.name}>
+                                        <Link to={`/pokemons/${p.id}`}>{p.name}</Link>
+                                    </div>
+                                );
+                            })
+                        }
+                    </div>
+                    <button disabled={offset+limit>count} 
+                            onClick={ () => this.paginator(true)}
+                            >
+                                {this.next}
+                    </button>
+                </div>
+                
             </div>
         )
     }

@@ -1,0 +1,11 @@
+.container_column {
+    display: flex; /* or inline-flex */
+    flex-direction: column;
+  }
+
+.container_row {
+    display: flex; /* or inline-flex */
+    align-items: stretch;
+    flex-direction: row;
+    justify-content: center;
+}
